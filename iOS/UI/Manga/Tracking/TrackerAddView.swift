@@ -15,8 +15,11 @@ struct TrackerAddView: View {
 
     @State var isLoading = false
     @State var showSearchController = false
+    
+  
 
     var body: some View {
+
         HStack {
             ZStack {
                 HStack {
@@ -29,9 +32,19 @@ struct TrackerAddView: View {
                 if isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
-                } else {
+                }
+                else {
                     Button(NSLocalizedString("START_TRACKING", comment: "")) {
-                        showSearchController.toggle()
+                        Task {
+                            let sources = await tracker.search(for: manga)
+                            if sources.count == 1 {
+                                TrackerManager.shared.track(result: sources[0], manga: manga, tracker: tracker)
+                            }
+                            else {
+                                showSearchController.toggle()
+                            }
+                        }
+                        
                     }
                 }
             }

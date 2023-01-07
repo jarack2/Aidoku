@@ -25,6 +25,7 @@ class TrackerManager {
     var hasAvailableTrackers: Bool {
         trackers.contains { $0.isLoggedIn }
     }
+    
 
     /// Get the instance of the tracker with the specified id.
     func getTracker(id: String) -> Tracker? {
@@ -72,6 +73,23 @@ class TrackerManager {
             }
 
             await tracker.update(trackId: item.id, update: update)
+        }
+    }
+    
+    /// tracks selected result item
+    func track(result: TrackSearchItem, manga: Manga, tracker: Tracker) {
+        Task { @MainActor in
+            let hasReadChapters = await CoreDataManager.shared.container.performBackgroundTask { context in
+                CoreDataManager.shared.hasHistory(sourceId: manga.sourceId, mangaId: manga.id, context: context)
+            }
+            await tracker.register(trackId: result.id, hasReadChapters: hasReadChapters)
+            await TrackerManager.shared.saveTrackItem(item: TrackItem(
+                id: result.id,
+                trackerId: tracker.id,
+                sourceId: manga.sourceId,
+                mangaId: manga.id,
+                title: result.title
+            ))
         }
     }
 

@@ -10,6 +10,7 @@ import SwiftUI
 class TrackerSearchViewController: UITableViewController {
 
     let tracker: Tracker
+    
     let manga: Manga
 
     var results: [TrackSearchItem] = []
@@ -22,6 +23,7 @@ class TrackerSearchViewController: UITableViewController {
         self.tracker = tracker
         self.manga = manga
         self.query = manga.title
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -82,19 +84,7 @@ class TrackerSearchViewController: UITableViewController {
 
     @objc func track() {
         let result = results[selectedIndex ?? 0]
-        Task { @MainActor in
-            let hasReadChapters = await CoreDataManager.shared.container.performBackgroundTask { context in
-                CoreDataManager.shared.hasHistory(sourceId: self.manga.sourceId, mangaId: self.manga.id, context: context)
-            }
-            await tracker.register(trackId: result.id, hasReadChapters: hasReadChapters)
-            await TrackerManager.shared.saveTrackItem(item: TrackItem(
-                id: result.id,
-                trackerId: tracker.id,
-                sourceId: manga.sourceId,
-                mangaId: manga.id,
-                title: result.title
-            ))
-        }
+        TrackerManager.shared.track(result: result, manga: manga, tracker: tracker)
         dismiss(animated: true)
     }
 }

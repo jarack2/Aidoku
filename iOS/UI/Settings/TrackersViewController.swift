@@ -95,10 +95,19 @@ extension TrackersViewController {
         if cell.imageView != nil {
             cell.textLabel?.leadingAnchor.constraint(equalTo: cell.imageView!.trailingAnchor, constant: 12).isActive = true
         }
+        
+        let switchView = UISwitch(frame: .zero)
+        switchView.setOn(false, animated: true)
+        switchView.tag = indexPath.row
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
 
         return cell
     }
 
+    @objc func switchChanged(_ sender : UISwitch!) {
+        print("worked")
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 

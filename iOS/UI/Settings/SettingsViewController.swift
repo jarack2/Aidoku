@@ -217,7 +217,8 @@ class SettingsViewController: SettingsTableViewController {
             ]),
             // MARK: Trackers
             SettingItem(type: "group", title: NSLocalizedString("TRACKERS", comment: ""), items: [
-                SettingItem(type: "page", key: "Trackers.trackers", title: NSLocalizedString("TRACKERS", comment: ""))
+                SettingItem(type: "page", key: "Trackers.trackers", title: NSLocalizedString("TRACKERS", comment: "")),
+                SettingItem(type: "switch", key: "Trackers.autotrack", title: NSLocalizedString("AUTOTRACK", comment: ""))
             ]),
             // MARK: Logging
             SettingItem(type: "group", title: NSLocalizedString("LOGGING", comment: ""), items: [
