@@ -257,6 +257,7 @@
 "DOUBLE_PAGE" = "Double Page";
 "MULTI_LANGUAGE" = "Multi-Language";
 "TRACKERS" = "Trackers";
+"AUTOTRACK" = "Auto-Track";
 "LOGOUT" = "Log out";
 "LOGOUT_FROM_%@" = "Log out from %@?";
 "STATUS" = "Status";
