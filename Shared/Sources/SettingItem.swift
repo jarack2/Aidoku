@@ -34,6 +34,9 @@ struct SettingItem: Codable {
     var minimumValue: Double?
     var maximumValue: Double?
 
+    // switch
+    var disabled: Bool?
+    
     var url: String?
     var destructive: Bool? // button
     var external: Bool? // link
@@ -76,6 +79,8 @@ struct SettingItem: Codable {
         case minimumValue
         case maximumValue
 
+        case disabled
+        
         case url
         case destructive
         case external
